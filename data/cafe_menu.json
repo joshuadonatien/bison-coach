@@ -1,0 +1,12 @@
+{
+  "_note": "SAMPLE DATA ONLY. Replace with the real Howard café menu once available.",
+  "items": [
+    {"name": "Grilled chicken, brown rice and vegetables", "calories": 520, "protein_g": 42, "carbs_g": 55, "tags": ["high-protein", "balanced"]},
+    {"name": "Turkey and avocado wrap", "calories": 480, "protein_g": 30, "carbs_g": 45, "tags": ["balanced"]},
+    {"name": "Veggie stir-fry with tofu", "calories": 430, "protein_g": 22, "carbs_g": 50, "tags": ["vegetarian", "balanced"]},
+    {"name": "Greek yogurt parfait", "calories": 280, "protein_g": 18, "carbs_g": 34, "tags": ["vegetarian", "light", "high-protein"]},
+    {"name": "Pasta with marinara and side salad", "calories": 610, "protein_g": 20, "carbs_g": 95, "tags": ["vegetarian", "high-carb"]},
+    {"name": "Egg-white omelet with spinach", "calories": 310, "protein_g": 26, "carbs_g": 8, "tags": ["vegetarian", "high-protein", "light"]},
+    {"name": "Salmon bowl with quinoa", "calories": 560, "protein_g": 38, "carbs_g": 48, "tags": ["high-protein", "balanced"]}
+  ]
+}

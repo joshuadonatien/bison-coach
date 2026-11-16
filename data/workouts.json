@@ -1,0 +1,11 @@
+{
+  "_note": "SAMPLE DATA ONLY. Generic wellness workouts; not medical advice.",
+  "workouts": [
+    {"name": "30-minute full-body circuit", "minutes": 30, "goal": ["general", "muscle", "fat-loss"], "level": "beginner"},
+    {"name": "Upper-body strength (push/pull)", "minutes": 45, "goal": ["muscle"], "level": "intermediate"},
+    {"name": "Lower-body strength and core", "minutes": 45, "goal": ["muscle", "general"], "level": "intermediate"},
+    {"name": "20-minute treadmill intervals", "minutes": 20, "goal": ["fat-loss", "endurance"], "level": "beginner"},
+    {"name": "Easy 30-minute cardio and stretch", "minutes": 30, "goal": ["general", "endurance"], "level": "beginner"},
+    {"name": "Quick 15-minute core and mobility", "minutes": 15, "goal": ["general"], "level": "beginner"}
+  ]
+}
