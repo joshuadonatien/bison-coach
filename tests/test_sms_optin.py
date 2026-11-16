@@ -20,7 +20,7 @@ def client(tmp_path, monkeypatch):
     monkeypatch.setattr(store, "DB_PATH", str(tmp_path / "sms.db"))
     fake = ConsoleSender()
     monkeypatch.setattr(main, "sender", fake)
-    c = TestClient(main.app)
+    c = TestClient(main.app, headers={"X-Admin-Key": "test-admin-key"})
     c.fake_sender = fake
     return c
 

@@ -3,7 +3,7 @@ uvicorn>=0.30
 pydantic>=2.7
 pytest>=8.0
 httpx>=0.27
+twilio>=9.0               # SMS sending + webhook signature checks
 python-multipart>=0.0.9   # lets FastAPI read Twilio's form-encoded webhooks
 # Optional, enable when ready:
 # anthropic>=0.40      (LLM-written messages)
-# twilio>=9.0          (real SMS delivery)

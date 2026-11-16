@@ -1,6 +1,6 @@
 from xml.sax.saxutils import escape
 
-from fastapi import FastAPI, Form, HTTPException, Response
+from fastapi import Depends, FastAPI, Form, HTTPException, Response
 
 from . import store
 from .llm import write_message
@@ -8,6 +8,7 @@ from .messaging import Sender, default_sender
 from .models import Message, Student
 from .recommender import recommend
 from .replies import CONFIRM_PROMPT, handle_reply
+from .security import require_admin, verify_twilio
 
 app = FastAPI(title="Bison Coach")
 sender: Sender = default_sender()
@@ -49,7 +50,7 @@ def _send_tip(student: Student) -> Message:
     return msg
 
 
-@app.post("/send/{phone}")
+@app.post("/send/{phone}", dependencies=[Depends(require_admin)])
 def send_now(phone: str) -> Message:
     student = store.get(phone)
     if not student:
@@ -59,7 +60,7 @@ def send_now(phone: str) -> Message:
     return _send_tip(student)
 
 
-@app.post("/send-daily")
+@app.post("/send-daily", dependencies=[Depends(require_admin)])
 def send_daily() -> dict:
     """Call this from a scheduler once a day. One failed text doesn't stop the rest."""
     sent, failed = 0, 0
@@ -79,7 +80,7 @@ def _twiml(reply: str) -> Response:
     return Response(content=xml, media_type="application/xml")
 
 
-@app.post("/inbound")
+@app.post("/inbound", dependencies=[Depends(verify_twilio)])
 def inbound(From: str = Form(...), Body: str = Form("")) -> Response:
     """Webhook for incoming texts. Twilio posts form fields named From and Body."""
     student = store.get(From)

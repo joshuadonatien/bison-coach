@@ -53,7 +53,7 @@ def test_store_roundtrip(tmp_path):
 
 def test_api_flow(tmp_path, monkeypatch):
     monkeypatch.setattr(store, "DB_PATH", str(tmp_path / "api.db"))
-    client = TestClient(app)
+    client = TestClient(app, headers={"X-Admin-Key": "test-admin-key"})
     assert client.post("/students", json={"phone": "+12025550107", "name": "Ada"}).status_code == 200
     assert client.post("/send/+12025550107").status_code == 409  # not confirmed yet
     client.post("/inbound", data={"From": "+12025550107", "Body": "YES"})
