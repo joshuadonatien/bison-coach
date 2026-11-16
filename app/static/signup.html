@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bison Coach – Sign up</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Bison Coach</h1>
+    <p>One text a day: a café meal pick and a Burr Gym workout. No app.</p>
+  </header>
+  <main>
+    <form class="card" method="post" action="/signup">
+      <label for="name">First name</label>
+      <input id="name" name="name" type="text" maxlength="40" required autocomplete="given-name">
+
+      <label for="phone">Mobile number (US)</label>
+      <input id="phone" name="phone" type="tel" placeholder="(202) 555-0123" required autocomplete="tel">
+
+      <label for="goal">Main goal</label>
+      <select id="goal" name="goal">
+        <option value="general">Stay generally healthy</option>
+        <option value="muscle">Build muscle</option>
+        <option value="fat-loss">Lose fat</option>
+        <option value="endurance">Build endurance</option>
+      </select>
+
+      <label for="level">Workout experience</label>
+      <select id="level" name="level">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+      </select>
+
+      <label for="minutes">Time you usually have for a workout</label>
+      <select id="minutes" name="minutes_available">
+        <option value="15">15 minutes</option>
+        <option value="20">20 minutes</option>
+        <option value="30" selected>30 minutes</option>
+        <option value="45">45 minutes</option>
+        <option value="60">60 minutes</option>
+      </select>
+
+      <label class="check"><input type="checkbox" name="vegetarian" value="yes"> I'm vegetarian</label>
+
+      <!-- Honeypot: real people never see or fill this; bots usually do. -->
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this empty</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <label class="check"><input type="checkbox" name="age_confirm" value="yes" required> I am 18 or older.</label>
+
+      <label class="check">
+        <input type="checkbox" name="consent" value="yes" required>
+        <span>I agree to receive up to 1 automated text per day from Bison Coach at the number
+        above. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help. I'll get a
+        text asking me to reply YES before anything else is sent.</span>
+      </label>
+
+      <button type="submit">Sign up</button>
+
+      <p class="fine">Tips are general wellness suggestions, not medical advice. Talk to a
+      health professional about medical or dietary needs.</p>
+      <p class="fine">What we store: your name, number, and the preferences above, plus which
+      tips you liked or swapped. It's only used to send your daily tip. Reply STOP any time.</p>
+    </form>
+    <footer class="fine">A Howard University student class project. Not an official university service.</footer>
+  </main>
+</body>
+</html>

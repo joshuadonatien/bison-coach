@@ -17,3 +17,9 @@ for var in ("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER", "PU
 @pytest.fixture(autouse=True)
 def admin_key(monkeypatch):
     monkeypatch.setenv("ADMIN_API_KEY", ADMIN_KEY)
+
+
+@pytest.fixture(autouse=True)
+def reset_signup_rate_limit():
+    from app.signup import signup_limiter
+    signup_limiter.events.clear()

@@ -1,0 +1,60 @@
+/* Approximate Howard-style blue/red/white. Not official university branding. */
+:root {
+  --blue: #003a63;
+  --red: #e51937;
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --text: #1b2430;
+  --muted: #5a6573;
+  --border: #d5dbe3;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+header {
+  background: var(--blue);
+  color: #fff;
+  padding: 20px 16px;
+  border-bottom: 4px solid var(--red);
+}
+header h1 { margin: 0; font-size: 1.6rem; }
+header p { margin: 4px 0 0; opacity: .9; }
+main { max-width: 520px; margin: 0 auto; padding: 20px 16px 40px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+label { display: block; font-weight: 600; margin: 14px 0 4px; }
+input[type=text], input[type=tel], select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.check input { margin-top: 4px; flex-shrink: 0; }
+.fine { font-size: .875rem; color: var(--muted); }
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--red);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { filter: brightness(.92); }
+.hp { position: absolute; left: -9999px; } /* honeypot: hidden from people, visible to bots */
+footer { text-align: center; margin-top: 20px; }
+a { color: var(--blue); }

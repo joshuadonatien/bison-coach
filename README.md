@@ -18,15 +18,18 @@ It gives general wellness suggestions, not medical advice.
 ```bash
 pip install -r requirements.txt
 pytest
+export ADMIN_API_KEY=pick-any-long-random-string
 uvicorn app.main:app --reload
 ```
 
-Try it (prints the "SMS" to the console):
+Try it (without Twilio, each "SMS" is printed in the server console):
+
+1. Open http://localhost:8000/ and sign up with a test number like (202) 555-0123.
+   The console shows the "reply YES" text.
+2. Simulate the student's replies and the daily send:
 
 ```bash
-curl -X POST localhost:8000/students -H 'content-type: application/json' \
-  -d '{"phone":"+12025550123","name":"Joshua","goal":"muscle"}'   # texts a "reply YES" prompt
-curl -X POST localhost:8000/inbound -d From=+12025550123 -d Body=YES   # simulate the student's reply
+curl -X POST localhost:8000/inbound --data-urlencode From=+12025550123 -d Body=YES   # simulate the reply (urlencode keeps the +)
 curl -X POST localhost:8000/send/+12025550123 -H "X-Admin-Key: $ADMIN_API_KEY"
 ```
 

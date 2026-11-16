@@ -21,6 +21,9 @@ class Student(BaseModel):
     # Saved in the database so it survives a server restart.
     last_meal: Optional[str] = None
     last_workout: Optional[str] = None
+    # When we last texted the "reply YES" prompt (Unix time), so the public sign-up form
+    # can't be used to text the same number over and over.
+    confirm_sent_at: Optional[float] = None
 
 
 class Recommendation(BaseModel):

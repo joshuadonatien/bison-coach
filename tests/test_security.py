@@ -42,8 +42,8 @@ def test_admin_endpoints_fail_closed_without_configured_key(client, monkeypatch)
     assert client.post(f"/send/{PHONE}", headers={"X-Admin-Key": ""}).status_code == 503
 
 
-def test_signup_stays_public(client):
-    assert client.post("/students", json={"phone": "+12025550171"}).status_code == 200
+def test_students_api_needs_admin_key(client):
+    assert client.post("/students", json={"phone": "+12025550171"}).status_code == 401
 
 
 # ---- Twilio signature ----
