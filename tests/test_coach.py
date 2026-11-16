@@ -26,15 +26,16 @@ def test_time_limit_respected():
 
 
 def test_swap_changes_next_pick():
-    s = Student(phone="+12025550103", goal="muscle")
+    s = Student(phone="+12025550103", goal="muscle", opted_in=True)
     first = recommend(s)
-    s, _ = handle_reply(s, "SWAP", first.meal, first.workout)
+    s.last_meal, s.last_workout = first.meal, first.workout
+    s, _ = handle_reply(s, "SWAP")
     second = recommend(s)
     assert second.meal != first.meal
 
 
 def test_stop_opts_out():
-    s, _ = handle_reply(Student(phone="+12025550104"), "stop")
+    s, _ = handle_reply(Student(phone="+12025550104", opted_in=True), "stop")
     assert s.opted_in is False
 
 
@@ -54,7 +55,9 @@ def test_api_flow(tmp_path, monkeypatch):
     monkeypatch.setattr(store, "DB_PATH", str(tmp_path / "api.db"))
     client = TestClient(app)
     assert client.post("/students", json={"phone": "+12025550107", "name": "Ada"}).status_code == 200
+    assert client.post("/send/+12025550107").status_code == 409  # not confirmed yet
+    client.post("/inbound", data={"From": "+12025550107", "Body": "YES"})
     r = client.post("/send/+12025550107")
     assert r.status_code == 200 and "Ada" in r.json()["body"]
-    assert client.post("/inbound", params={"phone": "+12025550107", "text": "STOP"}).status_code == 200
+    assert client.post("/inbound", data={"From": "+12025550107", "Body": "STOP"}).status_code == 200
     assert client.post("/send/+12025550107").status_code == 409

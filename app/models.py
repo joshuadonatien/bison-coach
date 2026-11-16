@@ -12,10 +12,15 @@ class Student(BaseModel):
     goal: Goal = "general"
     level: Level = "beginner"
     vegetarian: bool = False
-    opted_in: bool = True
+    # False until the student texts YES back. We never send tips without that consent.
+    opted_in: bool = False
     minutes_available: int = 30
     liked: list[str] = []
     skipped: list[str] = []
+    # What we sent last, so a later LIKE/SWAP reply knows what it refers to.
+    # Saved in the database so it survives a server restart.
+    last_meal: Optional[str] = None
+    last_workout: Optional[str] = None
 
 
 class Recommendation(BaseModel):

@@ -25,7 +25,8 @@ Try it (prints the "SMS" to the console):
 
 ```bash
 curl -X POST localhost:8000/students -H 'content-type: application/json' \
-  -d '{"phone":"+12025550123","name":"Joshua","goal":"muscle"}'
+  -d '{"phone":"+12025550123","name":"Joshua","goal":"muscle"}'   # texts a "reply YES" prompt
+curl -X POST localhost:8000/inbound -d From=+12025550123 -d Body=YES   # simulate the student's reply
 curl -X POST localhost:8000/send/+12025550123
 ```
 
@@ -33,7 +34,8 @@ curl -X POST localhost:8000/send/+12025550123
 
 - LLM-written messages: `pip install anthropic` and set `ANTHROPIC_API_KEY`.
 - Real SMS: `pip install twilio` and set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`.
-  Point Twilio's inbound webhook at `/inbound`. Get explicit opt-in and keep STOP working.
+  Point Twilio's inbound webhook at `/inbound`. Students are only texted tips after they reply
+  YES to the confirmation text; STOP (and carrier synonyms) opts them out.
 - Daily sends: call `POST /send-daily` from cron or a scheduler.
 
 ## Roadmap
