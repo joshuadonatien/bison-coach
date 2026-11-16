@@ -43,6 +43,7 @@ values in your shell (the `.env` file is git-ignored).
 | `ADMIN_API_KEY` | `/send`, `/send-daily` | Any long random string. Send it as header `X-Admin-Key`. Without it those endpoints refuse all requests. |
 | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` | Real SMS | When the auth token is set, `/inbound` rejects requests without a valid Twilio signature. |
 | `PUBLIC_BASE_URL` | Real SMS behind ngrok/cloud | The public address Twilio calls, e.g. `https://abc123.ngrok.app`. Needed for signatures to match. |
+| `DATABASE_URL` | Cloud storage | Postgres connection string. If unset, a local SQLite file (`coach.db`) is used. Render's free tier wipes local files, so the cloud must use Postgres. |
 | `ANTHROPIC_API_KEY` | LLM-written messages | Optional; falls back to a template. |
 
 ## Turning on the real services
@@ -52,6 +53,23 @@ values in your shell (the `.env` file is git-ignored).
   Point Twilio's inbound webhook at `/inbound`. Students are only texted tips after they reply
   YES to the confirmation text; STOP (and carrier synonyms) opts them out.
 - Daily sends: call `POST /send-daily` (with `X-Admin-Key`) from cron or a scheduler.
+
+## Deploy to Render (free tier)
+
+`render.yaml` creates a free web service plus a free Postgres database.
+
+1. Render dashboard -> New -> Blueprint -> pick this GitHub repo and the branch to deploy.
+2. When asked for the `sync: false` values, leave the Twilio ones blank until you have a
+   verified toll-free number. Without them, texts are only printed in Render's logs.
+3. After the first deploy, set `PUBLIC_BASE_URL` to the service URL (e.g.
+   `https://bison-coach.onrender.com`) and copy the generated `ADMIN_API_KEY` from
+   the Environment tab.
+4. Check `https://<your-url>/health` returns `{"status":"ok"}` and the sign-up page loads.
+
+Free-tier caveats: the service sleeps after ~15 minutes idle and takes ~1 minute to wake,
+and free Postgres databases expire (reportedly ~30 days). Fine for a short pilot.
+
+To run the Postgres tests locally: `TEST_DATABASE_URL=postgresql://... pytest`.
 
 ## Roadmap
 

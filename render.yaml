@@ -1,0 +1,35 @@
+# Render "Blueprint": tells Render what to create from this repo.
+# Docs: https://render.com/docs/blueprint-spec
+# No secrets in this file. Values marked `sync: false` are typed into Render's dashboard.
+services:
+  - type: web
+    name: bison-coach
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # --proxy-headers: Render sits in front of our app, so trust its X-Forwarded-* headers
+    # to learn the visitor's real IP (for rate limiting) and that the URL is https
+    # (for Twilio signature checks).
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips="*"
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bison-coach-db
+          property: connectionString
+      - key: ADMIN_API_KEY
+        generateValue: true # Render makes a random key; copy it from the dashboard
+      - key: PUBLIC_BASE_URL
+        sync: false # e.g. https://bison-coach.onrender.com (shown after first deploy)
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_FROM_NUMBER
+        sync: false # your toll-free number in +1XXXXXXXXXX form
+
+databases:
+  - name: bison-coach-db
+    plan: free

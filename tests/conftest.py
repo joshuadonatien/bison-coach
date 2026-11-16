@@ -10,7 +10,9 @@ import pytest
 ADMIN_KEY = "test-admin-key"
 os.environ["COACH_DB"] = ":memory:"
 # Make sure a real Twilio account on this laptop can't be used by tests.
-for var in ("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER", "PUBLIC_BASE_URL"):
+# Same for a real database: tests use throwaway SQLite files unless TEST_DATABASE_URL is set.
+for var in ("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_FROM_NUMBER", "PUBLIC_BASE_URL",
+            "DATABASE_URL"):
     os.environ.pop(var, None)
 
 
